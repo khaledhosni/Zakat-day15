@@ -8,8 +8,8 @@ export declare class RegisterController {
         user: {
             user_id: string;
             created_at: Date;
-            full_name: string;
             email: string;
+            full_name: string;
             phone: string | null;
             is_active: boolean;
         };

@@ -14,6 +14,7 @@ export declare class LoginService {
             email: string;
             full_name: string;
             phone: string | null;
+            role: string;
         };
     }>;
 }

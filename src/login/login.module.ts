@@ -14,6 +14,7 @@ import { LoginService } from './login.service.js';
 
     JwtModule.registerAsync({
       inject: [ConfigService],
+      global: true,
 
       useFactory: (config: ConfigService) => ({
         secret: config.getOrThrow<string>('JWT_SECRET'),

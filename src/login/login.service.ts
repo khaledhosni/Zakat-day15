@@ -21,15 +21,29 @@ export class LoginService {
     // Step 1: Normalize email
     const email = dto.email.trim().toLowerCase();
 
-    // Step 2: Find user in shop.users
-    const user = await this.prisma.users.findFirst({
-      where: {
-        email: {
-          equals: email,
-          mode: 'insensitive',
-        },
+    // // Step 2: Find user in shop.users
+    // const user = await this.prisma.users.findFirst({
+    //   where: {
+    //     email: {
+    //       equals: email,
+    //       mode: 'insensitive',
+    //     },
+    //   },
+    // });
+
+
+    const user = await this.prisma.users.findUnique({
+  where: {
+    user_id: BigInt(1001),
+  },
+  include: {
+    user_roles: {
+      include: {
+        roles: true,
       },
-    });
+    },
+  },
+});
 
     // Step 3: Check user exists
     if (!user) {
@@ -58,9 +72,15 @@ export class LoginService {
     }
 
     // Step 6: Prepare JWT payload
+
+    // let roleNumber= Math.floor(Math.random() * 10);
+
+    // let role = roleNumber < 5 ? "USER" : "ADMIN";
+
     const payload = {
       sub: user.user_id.toString(),
       email: user.email,
+      role: user.user_roles[0].roles.role_name
     };
 
     // Step 7: Generate JWT
@@ -79,6 +99,8 @@ export class LoginService {
         email: user.email,
         full_name: user.full_name,
         phone: user.phone,
+        role: user.user_roles[0].roles.role_name
+
       },
     };
   }

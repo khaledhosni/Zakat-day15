@@ -18,6 +18,7 @@ LoginModule = __decorate([
             PrismaModule,
             JwtModule.registerAsync({
                 inject: [ConfigService],
+                global: true,
                 useFactory: (config) => ({
                     secret: config.getOrThrow('JWT_SECRET'),
                     signOptions: {

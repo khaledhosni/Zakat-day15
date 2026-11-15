@@ -12,6 +12,7 @@ export declare class LoginController {
             email: string;
             full_name: string;
             phone: string | null;
+            role: string;
         };
     }>;
 }

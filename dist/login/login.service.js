@@ -20,11 +20,15 @@ let LoginService = class LoginService {
     }
     async login(dto) {
         const email = dto.email.trim().toLowerCase();
-        const user = await this.prisma.users.findFirst({
+        const user = await this.prisma.users.findUnique({
             where: {
-                email: {
-                    equals: email,
-                    mode: 'insensitive',
+                user_id: BigInt(1001),
+            },
+            include: {
+                user_roles: {
+                    include: {
+                        roles: true,
+                    },
                 },
             },
         });
@@ -41,6 +45,7 @@ let LoginService = class LoginService {
         const payload = {
             sub: user.user_id.toString(),
             email: user.email,
+            role: user.user_roles[0].roles.role_name
         };
         const accessToken = await this.jwtService.signAsync(payload);
         return {
@@ -52,6 +57,7 @@ let LoginService = class LoginService {
                 email: user.email,
                 full_name: user.full_name,
                 phone: user.phone,
+                role: user.user_roles[0].roles.role_name
             },
         };
     }

@@ -12,6 +12,7 @@ import { ProductsModule } from './products/products.module.js';
 import { ConfigModule } from '@nestjs/config';
 import { RegisterModule } from './register/register.module.js';
 import { LoginModule } from './login/login.module.js';
+import { CustomersModule } from './customers/customers.module.js';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -20,7 +21,7 @@ AppModule = __decorate([
             ConfigModule.forRoot({
                 isGlobal: true,
             }),
-            PrismaModule, ProductsModule, RegisterModule, LoginModule
+            PrismaModule, ProductsModule, RegisterModule, LoginModule, CustomersModule
         ],
         controllers: [AppController],
         providers: [AppService],
